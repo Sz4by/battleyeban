@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, EmbedBuilder, InteractionType, Options } = require('discord.js'); // <-- HOZZÁADVA: Options
+const { Client, GatewayIntentBits, EmbedBuilder, InteractionType, Options } = require('discord.js');
 const playwright = require('playwright');
 require('dotenv').config();
 const http = require('http');
@@ -15,7 +15,7 @@ const NOT_BANNED_TEXT = "Not banned.";
 // Bot kliens létrehozása MINIMÁLIS cache-sel (RAM spórolás)
 const client = new Client({
     intents: [GatewayIntentBits.Guilds], // Csak a minimális "szándék"
-    makeCache: Options.cacheWithLimits(Options.cacheSettings.Default)
+    makeCache: Options.cacheWithLimits(Options.DefaultCacheSettings) // <-- EZ VOLT A HIBA, MOST JAVÍTVA
     // Ez azt mondja a botnak, hogy ne cache-eljen (jegyezzen meg)
     // feleslegesen üzeneteket, felhasználókat, csatornákat stb.
 });
@@ -105,8 +105,7 @@ client.on('interactionCreate', async interaction => {
                 await interaction.editReply({ embeds: [embed] });
             }
 
-        } catch (error) {
-            console.error(error);
+        } catch (error) { (error);
             if (browser) await browser.close(); // Hiba esetén is zárjuk be a böngészőt
             await interaction.editReply(`Kritikus hiba történt a lekérdezés közben: ${error.message}`);
         }
@@ -114,7 +113,7 @@ client.on('interactionCreate', async interaction => {
 });
 
 // ===============================================
-//  ÚJ RÉSZ: A RENDER "WEBSZERVER" TRÜKK
+//  RENDER "WEBSZERVER" TRÜKK
 // ===============================================
 
 // Hozzunk létre egy egyszerű webszervert, ami válaszol a Render-nek
@@ -130,7 +129,7 @@ server.listen(port, () => {
 });
 
 // ===============================================
-// VÉGE AZ ÚJ RÉSZNEK
+// VÉGE A TRÜKKNEK
 // ===============================================
 
 // Bot bejelentkeztetése
