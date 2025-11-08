@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node index.js",
     "deploy": "node deploy-commands.js",
-    "postinstall": "npx playwright install --with-deps chromium"
   },
   "dependencies": {
     "@discordjs/rest": "^1.0.1",
