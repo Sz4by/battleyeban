@@ -1,15 +1,29 @@
-const { Client, GatewayIntentBits, EmbedBuilder, InteractionType } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder, InteractionType, Options } = require('discord.js'); // <-- HOZZÁADVA: Options
 const playwright = require('playwright');
 require('dotenv').config();
-const http = require('http'); // <-- ÚJ SOR (beépített webszerver)
+const http = require('http');
 
 // A szövegek, amiket keresünk
 const BASE_URL = "https://battleye.dudx.info/n/";
 const BANNED_TEXT = "Battleye banned.";
 const NOT_BANNED_TEXT = "Not banned.";
 
-// Bot kliens létrehozása
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+// ===============================================
+//  MÓDOSÍTOTT RÉSZ: Memória-takarékos kliens
+// ===============================================
+
+// Bot kliens létrehozása MINIMÁLIS cache-sel (RAM spórolás)
+const client = new Client({
+    intents: [GatewayIntentBits.Guilds], // Csak a minimális "szándék"
+    makeCache: Options.cacheWithLimits(Options.cacheSettings.Default)
+    // Ez azt mondja a botnak, hogy ne cache-eljen (jegyezzen meg)
+    // feleslegesen üzeneteket, felhasználókat, csatornákat stb.
+});
+
+// ===============================================
+// VÉGE A MÓDOSÍTOTT RÉSZNEK
+// ===============================================
+
 
 // Bot indításának jelzése
 client.once('ready', () => {
