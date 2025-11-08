@@ -4,8 +4,7 @@
 # - A legújabb Node.js
 # - Az ÖSSZES rendszerkönyvtár (`libnss3` és a többi)
 # - A Playwright és a böngészők (Chromium)
-FROM mcr.microsoft.com/playwright/javascript:v1.40.0-jammy
-
+FROM mcr.microsoft.com/playwright/javascript:jammy
 # 2. lépés: Állítsunk be egy munkamappát a "dobozon" belül
 WORKDIR /app
 
